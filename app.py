@@ -73,12 +73,12 @@ def create_query():
     if 'person' in intent_res:
         person = intent_res['person']
         if person == 'unknown':
-            return jsonify({'query': 'unknown'}), 201
+            error = 'Person is unknown'
+            return jsonify({'error': error}), 404
 
     print('______')
     print(intent_res)
     # TODO: Return names.
-    
     print(intent_type)
     if intent_type == 'get_recent_posts':
         feed = fb_graph.get_feed(user_token, person)
