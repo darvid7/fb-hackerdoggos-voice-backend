@@ -82,6 +82,7 @@ class FacebookGraphHelper:
         # id = self.friends[friend_first_name][friend_last_name]['id']
         birthday = self.authenticated_user_graph.get_object(id='749012631926082', fields='birthday')
         print(birthday)
+        return birthday
 
     def get_friends(self):
         friends = self.authenticated_user_graph.get_object(id='me/friends' )
