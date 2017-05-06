@@ -72,10 +72,16 @@ def create_query():
     print(intent_type)
     if intent_type == 'get_recent_posts':
         feed = fb_graph.get_feed(user_token, person)
+        if not feed:
+            error = '%s not found in friends' % person
+            return jsonify({'error': error}), 404
         return jsonify({'feed': feed, 'intent': intent_res, 'person': person}), 201
 
     elif intent_type == 'get_birthday':
         birthday = fb_graph.get_birthday(user_token, person)
+        if not birthday:
+            error = '%s not found in friends' % person
+            return jsonify({'error': error}), 404
         return jsonify({'birthday': birthday, 'intent': intent_res, 'person': person}), 201
 
     elif intent_type == 'get_friend_online_status':
