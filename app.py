@@ -75,7 +75,8 @@ def create_query():
     print(intent_res)
     # TODO: Return names.
     if person == 'unknown':
-        return jsonify({'query': 'unknown'}), 201
+        error = 'Person is unknown'
+        return jsonify({'error': error}), 404
 
     print(intent_type)
     if intent_type == 'get_recent_posts':
