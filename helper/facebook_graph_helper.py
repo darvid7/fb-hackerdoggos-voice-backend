@@ -154,10 +154,9 @@ class FacebookGraphHelper:
             print('All likes: ' + str(likes))
             return likes
 
-
-
-
         friend_id = self.parse_friend(user_token, friend_full_name)
+        if not friend_id:
+            return False
 
         query = '%s/likes' % friend_id
         print('Like query: ' + query)
