@@ -103,7 +103,7 @@ def create_query():
 
     elif intent_type == 'post_love_emojis':
         return jsonify({'todo': 'this', 'intent': intent_res}), 201
-        
+
     elif intent_type == 'get_likes':
         return jsonify({'todo': 'this', 'intent': intent_res}), 201
 
