@@ -5,7 +5,7 @@ from flask_cors import CORS
 from helper.wit_fetcher import WitFetcher
 from helper.facebook_graph_helper import FacebookGraphHelper
 
-fb_graph = FacebookGraphHelper()
+fb_graph = FacebookGraphHelper('fb_app_config')
 app = Flask(__name__)
 CORS(app)
 

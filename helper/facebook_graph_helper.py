@@ -17,16 +17,16 @@ name_maps = {
 
 class FacebookGraphHelper:
 
-    def __init__(self):
+    def __init__(self, path):
         self.config = {}
-        ConfigParser.load_config('../fb_app_config', self.config)
+        ConfigParser.load_config(path, self.config)
         self.application_access_token = None
         self._authenticate_app()
         # self.graph = facebook.GraphAPI(access_token=self.application_access_token)
         self.graph_map = {}
 
-        # self.authenticated_user_graph = facebook.GraphAPI(access_token=self.config['user_refreshable_token'])
-        # self.authenticated_user_id = self.authenticated_user_graph.get_object(id='me', fields='id')['id']
+        self.authenticated_user_graph = facebook.GraphAPI(access_token=self.config['user_refreshable_token'])
+        self.authenticated_user_id = self.authenticated_user_graph.get_object(id='me', fields='id')['id']
         #  print('id: ' + self.authenticated_user_id)
 
         # fp = FriendParser()
@@ -88,9 +88,9 @@ class FacebookGraphHelper:
         return friends
 
     def test(self):
-        x = self.graph.get_object(id='749012631926082', fields='birthday')
+        x = self.authenticated_user_graph.get_object(id='749012631926082', fields='birthday')
         print(x)
-        y = self.graph.get_object(id='749012631926082/feed')
+        y = self.authenticated_user_graph.get_object(id='749012631926082/feed')
         print(y)
 
 # David temp id: 749012631926082
