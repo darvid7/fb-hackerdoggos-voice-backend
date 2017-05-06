@@ -36,7 +36,7 @@ def get_specific_query(query_id):
     print(query_id)
     matching_queries = [q for q in queries if q['id'] == query_id]
     if len(matching_queries) == 0:
-        abort(404)  # Kills server.
+        abort(404)
     return jsonify({'queries': matching_queries})
 
 
