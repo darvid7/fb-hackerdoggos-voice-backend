@@ -1,7 +1,9 @@
 from flask import Flask, jsonify, abort, request
 from config_parser import ConfigParser
 from flask_cors import CORS
+import json
 # import helper
+import requests
 from helper.wit_fetcher import WitFetcher
 from helper.facebook_graph_helper import FacebookGraphHelper
 
@@ -49,6 +51,32 @@ def get_specific_query(query_id):
 # @app.route('/hackerdoggos/api/v1/query', methods=['POST'])
 # def post_query():
 #     return request
+
+@app.route('/test/msg', methods=['POST'])
+def send_msg():
+    my_id = 749012631926082
+    jos_id = 10154885611087415
+    message = 'Hayyyyy!'
+
+    params = {
+        'access_token': 'EAADxJ5QX8c0BAKKiixCaIzkY0vtZCf35BTvHOlAVAg6dDxvBhoY0HVDcH1JWmdJMYCvIJgYN2f9wkLxlVI6hEJ9b8HgwcsBbqK6zYLDisJBLnZA5wMHeWHYktWbjro3vqH2mNkSIBcgtAfZBwtt6R4djFmOyCSsYN2ZBKl1fdTYdZAJZC6bAGu0gAVetqZAsoMXIClZCcD3YbAZDZD'
+    }
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    data = json.dumps({
+        'recipient':  {
+            'id': jos_id
+        },
+        'message': {
+            'text': message
+        }
+    })
+
+    r = requests.post('https://graph.facebook.com/v2.9/749012631926082/messages', params=params, headers=headers, data=data)
+    print(r.status_code)
+    print(r.text)
+
 
 @app.route('/hackerdoggos/api/v1/query', methods=['POST'])
 def create_query():

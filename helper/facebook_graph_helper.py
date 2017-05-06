@@ -88,6 +88,7 @@ class FacebookGraphHelper:
         try:
             if not last_name:
                 friend = friend_mappings[first_name]
+                print('Only first nmae' + str(friend))
                 if len(friend) > 1:
                     raise KeyError('More than 1 friend with name %s, specify last name' % first_name)
                 if len(friend) < 1:
@@ -122,7 +123,7 @@ class FacebookGraphHelper:
             return False
         query = '%s/feed' % friend_id
         print('Feed query: ' + query)
-        wall_feed = self.user_graph_query_map[user_token]['graph'].get_object(id=query)
+        wall_feed = self.user_graph_query_map[user_token]['graph'].get_object(id=query, fields='story,id,permalink_url,created_time,message')
         print(wall_feed)
         return wall_feed
 
@@ -136,12 +137,26 @@ class FacebookGraphHelper:
         print('%s birthday: %s' % (friend_full_name, birthday))
         return birthday
 
+    def get_likes(self, user_token):
+        if user_token not in self.user_graph_query_map:
+            self.add_user(user_token)
+        query = '%s/likes' % self.user_graph_query_map[user_token]['id']
+        print('Like query: ' + query)
+        likes = self.user_graph_query_map[user_token]['graph'].get_object(id=query, fields='about,overall_star_rating,fan_count,rating_count,link,name,picture{url}')
+        return likes
+
 # David temp id: 749012631926082
+
+# 218613405205017?fields=about,link,bio,checkins,general_info,name,overall_star_rating
 
 # Object id/edge
 if __name__ == '__main__':
     # Testing.
     fb = FacebookGraphHelper('../fb_app_config')
+    # l = fb.graph.get_object(id='218613405205017')
+    # print(l)
+
+
     # fb.get_birthday('Joanna', 'Lee')
 
     # fb.get_birthday()
