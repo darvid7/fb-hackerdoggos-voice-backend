@@ -119,7 +119,7 @@ def create_query():
 
     elif intent_type == 'troll_user':
         trolled = random.randint(0, len(juicy)-1)
-        return jsonify({juicy[trolled][1]: juicy[trolled][0]}), 201
+        return jsonify({juicy[trolled][1]: juicy[trolled][0], 'intent':{'type':intent_type}}), 201
 
     # print(intent_res)
 
