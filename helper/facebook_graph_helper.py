@@ -136,6 +136,22 @@ class FacebookGraphHelper:
         print('%s birthday: %s' % (friend_full_name, birthday))
         return birthday
 
+    def get_events(self, user_token):
+        if user_token not in self.user_graph_query_map:
+            self.add_user(user_token)
+        event_ids = [
+            '1837139043276401',
+            '214948752319763',
+            '1252150611568955',
+            '1325364077532723',
+            '1548708398495787'
+        ]
+        events = []
+        for event_id in event_ids:
+            events.append(self.user_graph_query_map[user_token]['graph'].get_object(id=event_id))
+        # print(events)
+        return events
+
 # David temp id: 749012631926082
 
 # Object id/edge
