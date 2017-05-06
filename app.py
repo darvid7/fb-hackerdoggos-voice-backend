@@ -40,7 +40,5 @@ def get_specific_query(query_id):
     return jsonify({'queries': matching_queries})
 
 
-
 if __name__ == '__main__':
     app.run(debug=True)
-
