@@ -1,7 +1,7 @@
 from wit import Wit
 
 # Read access token for wit.ai instance.
-with open('with_server_config', 'r') as f:
+with open('wit_server_config', 'r') as f:
     config = f.readlines()
 
 access_token = config[0].strip()

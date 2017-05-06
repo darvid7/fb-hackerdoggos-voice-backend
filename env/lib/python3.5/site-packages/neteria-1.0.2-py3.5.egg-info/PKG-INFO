@@ -1,0 +1,19 @@
+Metadata-Version: 1.1
+Name: neteria
+Version: 1.0.2
+Summary: A simple game networking library.
+Home-page: http://www.neteria.org
+Author: William Edwards
+Author-email: shadowapex@gmail.com
+License: GPLv3
+Description: UNKNOWN
+Keywords: gaming networking network game
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)
+Classifier: Topic :: System :: Networking
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3.5
