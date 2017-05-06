@@ -133,7 +133,7 @@ def create_query():
 
     elif intent_type == 'post_love_emojis':
         return jsonify({'todo': 'this', 'intent': intent_res}), 201
-        
+
     elif intent_type == 'get_likes':
         likes = fb_graph.get_likes(user_token, person)
         return jsonify({'likes': likes, 'intent': intent_res}), 201

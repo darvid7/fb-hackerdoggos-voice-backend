@@ -22,26 +22,20 @@ class WitFetcher:
         # return res
         out = {}
         out['type'] = 'get_birthday'
-        try:
-            out['person'] = res['person'][0]['value']
-        except KeyError:
-            out['person'] = 'unknown'
+        out['person'] = self.getPerson(res)
         return out
 
     def parseCheckFriendResponse(self, res):
         out = {}
         out['type'] = 'get_recent_posts'
-        try:
-            out['person'] = res['person'][0]['value']
-        except KeyError:
-            out['person'] = 'unknown'
+        out['person'] = self.getPerson(res)
         return out
         # return res
 
     def parseCheckFriendOnlineStatusResponse(self, res):
         out = {}
         out['type'] = 'get_friend_online_status'
-        out['person'] = res['person'][0]['value']
+        out['person'] = self.getPerson(res)
         return out
 
     def parseCheckEventsResponse(self, res):
@@ -52,10 +46,7 @@ class WitFetcher:
     def parseSendLovesResponse(self, res):
         out = {}
         out['type'] = 'post_love_emojis'
-        try:
-            out['person'] = res['person'][0]['value']
-        except KeyError:
-            out['person'] = 'unknown'
+        out['person'] = self.getPerson(res)
         return out
 
     def parseGetLikesResponse(self, res):
