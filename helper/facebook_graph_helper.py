@@ -22,25 +22,34 @@ class FacebookGraphHelper:
         ConfigParser.load_config('../fb_app_config', self.config)
         self.application_access_token = None
         self._authenticate_app()
-        self.graph = facebook.GraphAPI(access_token=self.application_access_token)
-        self.authenticated_user_graph = facebook.GraphAPI(access_token=self.config['user_refreshable_token'])
-        self.authenticated_user_id = self.authenticated_user_graph.get_object(id='me', fields='id')['id']
-        print('id: ' + self.authenticated_user_id)
-        fp = FriendParser()
-        fp.load_friends('../fb_friend_graph_subset')
-        self.friends = fp.friends
-        print('friends: ' + str(len(self.friends)))
+        # self.graph = facebook.GraphAPI(access_token=self.application_access_token)
+        self.graph_map = {}
 
-    def parse_name(self, accepted_name):
-        names = accepted_name.split(' ')
-        if len(names) > 1 and [x for x in names if x != '']:
-            first_name, last_name = names
+        # self.authenticated_user_graph = facebook.GraphAPI(access_token=self.config['user_refreshable_token'])
+        # self.authenticated_user_id = self.authenticated_user_graph.get_object(id='me', fields='id')['id']
+        #  print('id: ' + self.authenticated_user_id)
+
+        # fp = FriendParser()
+        # fp.load_friends('../fb_friend_graph_subset')
+        # self.friends = fp.friends
+        # print('friends: ' + str(len(self.friends)))
+
+    def add_user(self, user_token):
+        if user_token in self.graph_map:
+            pass
         else:
-            first_name = names[0]
+            self.graph_map[user_token] = facebook.GraphAPI(access_token=user_token)
 
-        for name in self.friends.keys:
-            if first_name in name:
-                pass
+    # def parse_name(self, accepted_name):
+    #     names = accepted_name.split(' ')
+    #     if len(names) > 1 and [x for x in names if x != '']:
+    #         first_name, last_name = names
+    #     else:
+    #         first_name = names[0]
+    #
+    #     for name in self.friends.keys:
+    #         if first_name in name:
+    #             pass
 
     def _authenticate_app(self):
         response = requests.get('https://graph.facebook.com/oauth/access_token?'
@@ -57,7 +66,7 @@ class FacebookGraphHelper:
     #     friends = self.authenticated_user_graph.get_all_connections(id='me/friends', connection_name='')
     #     return friends
 
-    def get_all_friends(self):
+    def get_all_friends(self, user_token):
         friends = self.authenticated_user_graph.get_object(id='me/friends', limit=50, fields='id,name')
 
         print(friends)
