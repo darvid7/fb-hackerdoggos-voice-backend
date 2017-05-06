@@ -50,7 +50,7 @@ def create_task():
         'text': request.json['text']
     }
     queries.append(query)
-    return jsonify({'task': query}), 201
+    return jsonify({'query': query}), 201
 
 if __name__ == '__main__':
     app.run(
