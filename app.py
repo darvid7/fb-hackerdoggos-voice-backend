@@ -138,6 +138,10 @@ def create_query():
         likes = fb_graph.get_likes(user_token, person)
         return jsonify({'likes': likes, 'intent': intent_res}), 201
 
+    elif intent_type == 'troll_user':
+        return jsonify({'likes': likes, 'intent': intent_res}), 201
+        
+
     # print(intent_res)
 
     # ------------------------------

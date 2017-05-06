@@ -55,6 +55,12 @@ class WitFetcher:
         out['person'] = self.getPerson(res)
         return out
 
+    def parseTrollUserResponse(self, res):
+        out = {
+            'type': 'troll_user'
+        }
+        return out
+
     def getPerson(self, res):
         person = None
         try:
@@ -82,6 +88,8 @@ class WitFetcher:
             return self.parseSendLovesResponse(res)
         elif intent == 'IntentGetLikes':
             return self.parseGetLikesResponse(res)
+        elif intent == 'IntentTrollUser':
+            return self.parseTrollUserResponse(res)
         else:
             return 'no matches'
 
