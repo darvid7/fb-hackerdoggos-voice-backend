@@ -42,9 +42,6 @@ class FacebookGraphHelper:
             if first_name in name:
                 pass
 
-
-
-
     def _authenticate_app(self):
         response = requests.get('https://graph.facebook.com/oauth/access_token?'
                                 'client_id=%s'
@@ -70,6 +67,7 @@ class FacebookGraphHelper:
         query = '%s/feed' % id
         wall_feed = self.authenticated_user_graph.get_object(id='749012631926082/feed')
         print(wall_feed)
+        return wall_feed
 
     def get_birthday(self): # , friend_first_name, friend_last_name):
         # id = self.friends[friend_first_name][friend_last_name]['id']
@@ -78,7 +76,7 @@ class FacebookGraphHelper:
 
     def get_friends(self):
         friends = self.authenticated_user_graph.get_object(id='me/friends' )
-        print(friends)
+        return friends
 
     def test(self):
         x = self.graph.get_object(id='749012631926082', fields='birthday')

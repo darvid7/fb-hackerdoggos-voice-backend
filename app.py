@@ -57,37 +57,36 @@ def create_query():
     wt = WitFetcher()
     text = request.json['text']
     print("Given text is : " + str(text))
-    query = {
-        'id': queries[-1]['id'] + 1,
-        'text': text
-    }
+    user_token = request.json['token']
     intent_res = wt.getResponse(text)
-    queries.append(query)
     # ------------------------------
     # FB GRAPH QUERY IN HERE.
     print('FB Graph Query')
     intent_type = intent_res['type']
     print(intent_type)
     if intent_type == 'get_recent_posts':
+        feed = fb_graph.get_feed()
+        return jsonify({'feed': feed, 'intent': intent_res}), 201
 
     elif intent_type == 'get_birthday':
-
+        birthday = fb_graph.get_birthday()
+        return jsonify({'birthday': birthday, 'intent': intent_res}), 201
 
     elif intent_type == 'get_friend_online_status':
-        return jsonify({'todo': 'this'}), 201
+        return jsonify({'todo': 'this', 'intent': intent_res}), 201
 
     elif intent_type == 'get_nearby_events':
-        return jsonify({'todo': 'this'}), 201
+        return jsonify({'todo': 'this', 'intent': intent_res}), 201
 
     elif intent_type == 'post_love_emojis':
-        return jsonify({'todo': 'this'}), 201
+        return jsonify({'todo': 'this', 'intent': intent_res}), 201
 
-    print(intent_res)
+    # print(intent_res)
 
     # ------------------------------
-    response = jsonify({'query': query, 'intent': intent_res})
+    # response = jsonify({'query': query, 'intent': intent_res})
     # response.headers.add('Access-Control-Allow-Origin', '*')
-    return response, 201
+    # return response, 201
 
 if __name__ == '__main__':
     app.run(
