@@ -163,7 +163,7 @@ class FacebookGraphHelper:
         likes = self.user_graph_query_map[user_token]['graph'].get_object(id=query, fields='about,overall_star_rating,fan_count,rating_count,link,name,picture{url}')
         print('All likes: ' + str(likes))
         likes_data = likes['data']
-       #  return likes
+        return likes
 
     def get_events(self, user_token):
         if user_token not in self.user_graph_query_map:
