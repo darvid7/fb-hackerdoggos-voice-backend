@@ -1,9 +1,14 @@
 .idea
 *.idea
 */.idea
+__pycache__
+.DS_Store
+
 
 wit_server_config
 
 facebook_experimental
 
 fb_app_config
+
+*.swp

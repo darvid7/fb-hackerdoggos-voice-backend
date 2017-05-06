@@ -1,14 +1,19 @@
-from flask import Flask
-from flask import jsonify
-from flask import abort
-from flask import request
+from flask import Flask, jsonify, abort, request
 import requests
 import json
 import facebook
-
-
+from config_parser import ConfigParser
 
 app = Flask(__name__)
+
+fb_config = {}
+wit_config = {}
+
+
+def config_set_up():
+    ConfigParser.load_config('fb_app_config', fb_config)
+    ConfigParser.load_config('wit_server_config', wit_config)
+
 
 queries = [
     {
@@ -21,41 +26,17 @@ queries = [
     },
     {
         'text': 'Facebook',
-        'id': 1
+        'id': 3
     }
 ]
 
 @app.route('/')
 def home():
-
-
-
-    response = requests.get('https://graph.facebook.com/oauth/access_token?'
-                                       'client_id=428403904204305'
-                                       '&client_secret=cfd7f9867bdeacd1805360844567c58f'
-                                       '&grant_type=client_credentials')
-    result = bytes.decode(response.content)
-    auth_data = json.loads(result)
-    print(auth_data)
-    app_id, access_token = auth_data['access_token'].split('|')
-    print(app_id)
-    print(access_token)
-    # print(fb_oauth_request.cookies)
-    # print(fb_oauth_request.raw)
-    # print(fb_oauth_request.content)
-    # fb_app_access_token = repr(fb_oauth_request.content)
-    #
-    # print(str(fb_app_access_token))
-    # data = bytes.decode(fb_oauth_request.content)
-
-    graph = facebook.GraphAPI(access_token=access_token, version='2.9')
-    fb_res = graph.get_permissions("375019402658742")
-    print(fb_res)
+    return "Hello World"
 
 @app.route('/hackerdoggos/api/v1/queries', methods=['GET'])
 def get_queries():
     return jsonify({'queries': queries})
-
 
 """
 Pass parameter by specifying type:name, pass into function handling route.
@@ -68,8 +49,24 @@ def get_specific_query(query_id):
         abort(404)
     return jsonify({'queries': matching_queries})
 
+# @app.route('/hackerdoggos/api/v1/query', methods=['POST'])
+# def post_query():
+#     return request
 
+@app.route('/hackerdoggos/api/v1/query', methods=['POST'])
+def create_task():
+    if not request.json or not 'text' in request.json:
+        abort(400)
+    query = {
+        'id': queries[-1]['id'] + 1,
+        'text': request.json['text']
+    }
+    queries.append(query)
+    return jsonify({'query': query}), 201
 
 if __name__ == '__main__':
-    app.run(debug=True)
-
+    app.run(
+        debug=True,
+        host="0.0.0.0",
+        port=int("1337")
+    )

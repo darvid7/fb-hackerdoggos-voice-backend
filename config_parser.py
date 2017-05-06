@@ -1,8 +1,7 @@
 class ConfigParser:
 
     @staticmethod
-    def load_config(path):
-        config = {}
+    def load_config(path, config):
         with open(path, 'r') as f:
             for line in f:
                 key, data = line.split(':')
