@@ -22,15 +22,41 @@ class WitFetcher:
         # return res
         out = {}
         out['type'] = 'get_birthday'
-        out['person'] = res['person'][0]['value']
+        try:
+            out['person'] = res['person'][0]['value']
+        except KeyError:
+            out['person'] = 'unknown'
         return out
 
     def parseCheckFriendResponse(self, res):
         out = {}
         out['type'] = 'get_recent_posts'
-        out['person'] = res['person'][0]['value']
+        try:
+            out['person'] = res['person'][0]['value']
+        except KeyError:
+            out['person'] = 'unknown'
         return out
         # return res
+
+    def parseCheckFriendOnlineStatusResponse(self, res):
+        out = {}
+        out['type'] = 'get_friend_online_status'
+        out['person'] = res['person'][0]['value']
+        return out
+
+    def parseCheckEventsResponse(self, res):
+        out = {}
+        out['type'] = 'get_nearby_events'
+        return out
+
+    def parseSendLovesResponse(self, res):
+        out = {}
+        out['type'] = 'post_love_emojis'
+        try:
+            out['person'] = res['person'][0]['value']
+        except KeyError:
+            out['person'] = 'unknown'
+        return out
 
     def getResponse(self, query):
         res = self.wit_client.message(query)['entities']
