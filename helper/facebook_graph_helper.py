@@ -159,10 +159,11 @@ class FacebookGraphHelper:
             return False
 
         query = '%s/likes' % friend_id
-        print('Like query: ' + query)
+        print('Like query for friend: ' + query)
         likes = self.user_graph_query_map[user_token]['graph'].get_object(id=query, fields='about,overall_star_rating,fan_count,rating_count,link,name,picture{url}')
         print('All likes: ' + str(likes))
-        return likes
+        likes_data = likes['data']
+       #  return likes
 
     def get_events(self, user_token):
         if user_token not in self.user_graph_query_map:
@@ -190,6 +191,12 @@ if __name__ == '__main__':
     fb = FacebookGraphHelper('../fb_app_config')
     # l = fb.graph.get_object(id='218613405205017')
     # print(l)
+    fb.add_user('EAADxJ5QX8c0BAIZCHiKzTsDj1BAebA4mZANH7QYZAZBnVKOsnJZCotEn7VSsjfCFSbvWKF8cRiUdARTofeqLeQoRZAMpy0JAxbaO7cUrmrHHvVfv7ArYdD14vXHOYOknN9TMeNYZCBnDLvOGTCIuV3ZBGUtZBkTNeB1wZD')
+    fb.get_all_registered_friends('EAADxJ5QX8c0BAIZCHiKzTsDj1BAebA4mZANH7QYZAZBnVKOsnJZCotEn7VSsjfCFSbvWKF8cRiUdARTofeqLeQoRZAMpy0JAxbaO7cUrmrHHvVfv7ArYdD14vXHOYOknN9TMeNYZCBnDLvOGTCIuV3ZBGUtZBkTNeB1wZD')
+    fb.get_birthday('EAADxJ5QX8c0BAIZCHiKzTsDj1BAebA4mZANH7QYZAZBnVKOsnJZCotEn7VSsjfCFSbvWKF8cRiUdARTofeqLeQoRZAMpy0JAxbaO7cUrmrHHvVfv7ArYdD14vXHOYOknN9TMeNYZCBnDLvOGTCIuV3ZBGUtZBkTNeB1wZD',
+                    'David Lei')
+    fb.get_likes('EAADxJ5QX8c0BAJj0xKG9vP1u0VFXpWeHzaqXuLTZCE9YbKJtPZBvKcbvUfQth9UraL7hrTJpKvT0MPl6WfJ0pVAM7ovkbkWZCtYxDxeITBsnsL8sE5fXyCdduVgusksJbTtyfaBEXCEZADGkA7uvo5kDQZCHE5dci9j5Qli54HtbDE2AO37fCaF0y2x362YUZD',
+                 'Joanna')
 
 
     # fb.get_birthday('Joanna', 'Lee')

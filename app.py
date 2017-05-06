@@ -3,6 +3,7 @@ from config_parser import ConfigParser
 from flask_cors import CORS
 import json
 # import helper
+import random
 import requests
 from helper.wit_fetcher import WitFetcher
 from helper.facebook_graph_helper import FacebookGraphHelper
@@ -16,7 +17,10 @@ CORS(app)
 fb_config = {}
 wit_config = {}
 
-
+juicy = [('Never gonna give you up, never gonna let you down'
+        'Never gonna run around and desert you'
+        'Never gonna make you cry, never gonna say goodbye'
+        'Never gonna tell a lie and hurt you', 'song') , ('http://i.imgur.com/qE9e8pU.png', 'image_url'), ('http://i.imgur.com/I0fGUHC.jpg', 'image_url')]
 def config_set_up():
     ConfigParser.load_config('fb_app_config', fb_config)
     ConfigParser.load_config('wit_server_config', wit_config)
@@ -51,32 +55,6 @@ def get_specific_query(query_id):
 # @app.route('/hackerdoggos/api/v1/query', methods=['POST'])
 # def post_query():
 #     return request
-
-@app.route('/test/msg', methods=['POST'])
-def send_msg():
-    my_id = 749012631926082
-    jos_id = 10154885611087415
-    message = 'Hayyyyy!'
-
-    params = {
-        'access_token': 'EAADxJ5QX8c0BAKKiixCaIzkY0vtZCf35BTvHOlAVAg6dDxvBhoY0HVDcH1JWmdJMYCvIJgYN2f9wkLxlVI6hEJ9b8HgwcsBbqK6zYLDisJBLnZA5wMHeWHYktWbjro3vqH2mNkSIBcgtAfZBwtt6R4djFmOyCSsYN2ZBKl1fdTYdZAJZC6bAGu0gAVetqZAsoMXIClZCcD3YbAZDZD'
-    }
-    headers = {
-        'Content-Type': 'application/json'
-    }
-    data = json.dumps({
-        'recipient':  {
-            'id': jos_id
-        },
-        'message': {
-            'text': message
-        }
-    })
-
-    r = requests.post('https://graph.facebook.com/v2.9/749012631926082/messages', params=params, headers=headers, data=data)
-    print(r.status_code)
-    print(r.text)
-
 
 @app.route('/hackerdoggos/api/v1/query', methods=['POST'])
 def create_query():
@@ -139,7 +117,8 @@ def create_query():
         return jsonify({'likes': likes, 'intent': intent_res}), 201
 
     elif intent_type == 'troll_user':
-        return jsonify({'likes': likes, 'intent': intent_res}), 201
+        trolled = random.randint(0, len(juicy)-1)
+        return jsonify({trolled[1]: trolled[0], }), 201
         
 
     # print(intent_res)
