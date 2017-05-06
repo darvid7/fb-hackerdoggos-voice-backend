@@ -90,6 +90,8 @@ class FacebookGraphHelper:
                 friend = friend_mappings[first_name]
                 if len(friend) > 1:
                     raise KeyError('More than 1 friend with name %s, specify last name' % first_name)
+                if len(friend) < 1:
+                    raise KeyError('No friends found with name %s' % first_name)
                 else:
                     friend_id = list(friend.values())[0]
             else:
@@ -113,6 +115,8 @@ class FacebookGraphHelper:
         self.user_graph_query_map[user_token]['friends'] = friend_dict
 
     def get_feed(self, user_token, friend_full_name):
+        if user_token not in self.user_graph_query_map:
+            self.add_user(user_token)
         friend_id = self.parse_friend(user_token, friend_full_name)
         if not friend_id:
             return False
@@ -123,6 +127,8 @@ class FacebookGraphHelper:
         return wall_feed
 
     def get_birthday(self, user_token, friend_full_name):
+        if user_token not in self.user_graph_query_map:
+            self.add_user(user_token)
         friend_id = self.parse_friend(user_token, friend_full_name)
         if not friend_id:
             return False

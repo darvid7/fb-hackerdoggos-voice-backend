@@ -52,19 +52,27 @@ def get_specific_query(query_id):
 
 @app.route('/hackerdoggos/api/v1/query', methods=['POST'])
 def create_query():
+    print('Posted')
     if not request.json or not 'text' in request.json or request.json['text']=='':
+        print('About to Abort')
         abort(400)
+    print('About to query wit')
     wt = WitFetcher()
     text = request.json['text']
     print("Given text is : " + str(text))
     user_token = request.json['token']
     intent_res = wt.getResponse(text)
+    print('Wit response: ' + str(intent_res))
+    if intent_res == 'no matches':
+        error = 'Query %s was not understood' % text
+        return jsonify({'error': error}), 404
     # ------------------------------
     # FB GRAPH QUERY IN HERE.
     print('FB Graph Query')
     intent_type = intent_res['type']
     person = intent_res['person']
-
+    print('______')
+    print(intent_res)
     # TODO: Return names.
     if person == 'unknown':
         return jsonify({'query': 'unknown'}), 201
@@ -75,14 +83,14 @@ def create_query():
         if not feed:
             error = '%s not found in friends' % person
             return jsonify({'error': error}), 404
-        return jsonify({'feed': feed, 'intent': intent_res, 'person': person}), 201
+        return jsonify({'feed': feed, 'intent': intent_res}), 201
 
     elif intent_type == 'get_birthday':
         birthday = fb_graph.get_birthday(user_token, person)
         if not birthday:
             error = '%s not found in friends' % person
             return jsonify({'error': error}), 404
-        return jsonify({'birthday': birthday, 'intent': intent_res, 'person': person}), 201
+        return jsonify({'birthday': birthday, 'intent': intent_res}), 201
 
     elif intent_type == 'get_friend_online_status':
         return jsonify({'todo': 'this', 'intent': intent_res}), 201
