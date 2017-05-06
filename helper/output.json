@@ -1,0 +1,1 @@
+{"msg_id":"0xUSWu8PHf0tLcuoI","_text":"What is Cal doing?","entities":{"query":[{"confidence":0.96854978140404,"value":"What","type":"value"}],"person":[{"confidence":0.76155684818181,"value":"Cal","type":"value"}],"IntentCheckFriend":[{"confidence":0.97864374226421,"value":"lookup_friend()"}]}}

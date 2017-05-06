@@ -1,6 +1,5 @@
-from flask import Flask
-from flask import jsonify
-from flask import abort
+from flask import Flask, jsonify, abort, request
+import helper
 
 app = Flask(__name__)
 
@@ -15,18 +14,17 @@ queries = [
     },
     {
         'text': 'Facebook',
-        'id': 1
+        'id': 3
     }
 ]
 
 @app.route('/')
 def home():
-    return 'HI'
+    return 'Hi'
 
 @app.route('/hackerdoggos/api/v1/queries', methods=['GET'])
 def get_queries():
     return jsonify({'queries': queries})
-
 
 """
 Pass parameter by specifying type:name, pass into function handling route.
@@ -39,6 +37,24 @@ def get_specific_query(query_id):
         abort(404)
     return jsonify({'queries': matching_queries})
 
+# @app.route('/hackerdoggos/api/v1/query', methods=['POST'])
+# def post_query():
+#     return request
+
+@app.route('/hackerdoggos/api/v1/query', methods=['POST'])
+def create_task():
+    if not request.json or not 'text' in request.json:
+        abort(400)
+    query = {
+        'id': queries[-1]['id'] + 1,
+        'text': request.json['text']
+    }
+    queries.append(query)
+    return jsonify({'task': query}), 201
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(
+        debug=True,
+        host="0.0.0.0",
+        port=int("23232")
+    )
