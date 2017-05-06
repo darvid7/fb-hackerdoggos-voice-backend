@@ -2,7 +2,7 @@ Flask==0.10.1
 itsdangerous==0.24
 Jinja2==2.9.6
 MarkupSafe==1.0
-Werkzeug==0.12.1
+wit>=4.2.0
 click==6.6
 cycler==0.9.0
 -e git+https://github.com/mobolic/facebook-sdk.git@cbbe56f00ae7cb838f5dd5e1ca46671a6ec7b0a2#egg=facebook_sdk
@@ -38,5 +38,5 @@ tlslite==0.4.9
 virtualenv==15.1.0
 virtualenv-clone==0.2.6
 virtualenvwrapper==4.7.1
-wit==4.2.0
+Werkzeug==0.12.1
 xmltodict==0.10.2
