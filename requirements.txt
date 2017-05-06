@@ -14,7 +14,6 @@ requests==2.11.1
 requests-oauthlib==0.7.0
 requests-toolbelt==0.7.0
 rsa==3.4.2
-six==1.10.0
 stevedore==1.10.0
 suds-jurko==0.6
 tlslite==0.4.9
