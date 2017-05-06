@@ -14,3 +14,5 @@ fb_app_config
 *.swp
 
 helper/fb_helper_test.txt
+
+*.pyc

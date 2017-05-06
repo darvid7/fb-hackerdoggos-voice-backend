@@ -88,7 +88,7 @@ class FacebookGraphHelper:
         try:
             if not last_name:
                 friend = friend_mappings[first_name]
-                print('Only first nmae' + str(friend))
+                print('Only first name: ' + str(friend))
                 if len(friend) > 1:
                     raise KeyError('More than 1 friend with name %s, specify last name' % first_name)
                 if len(friend) < 1:
@@ -130,6 +130,12 @@ class FacebookGraphHelper:
     def get_birthday(self, user_token, friend_full_name):
         if user_token not in self.user_graph_query_map:
             self.add_user(user_token)
+
+        if friend_full_name.lower() in ['my', 'me', 'i', 'myself']:
+            birthday = self.user_graph_query_map[user_token]['graph'].get_object(id=self.user_graph_query_map[user_token]['id'], fields='birthday')
+            print('query: my birthday ' + str(birthday))
+            return birthday
+
         friend_id = self.parse_friend(user_token, friend_full_name)
         if not friend_id:
             return False
@@ -137,13 +143,43 @@ class FacebookGraphHelper:
         print('%s birthday: %s' % (friend_full_name, birthday))
         return birthday
 
-    def get_likes(self, user_token):
+    def get_likes(self, user_token, friend_full_name):
         if user_token not in self.user_graph_query_map:
             self.add_user(user_token)
-        query = '%s/likes' % self.user_graph_query_map[user_token]['id']
+
+        if friend_full_name.lower() in ['my', 'me', 'i', 'myself']:
+            query = '%s/likes' % self.user_graph_query_map[user_token]['id']
+            print('Likes query: ' + str(query))
+            likes = self.user_graph_query_map[user_token]['graph'].get_object(id=query, fields='about,overall_star_rating,fan_count,rating_count,link,name,picture{url}')
+            print('All likes: ' + str(likes))
+            return likes
+
+
+
+
+        friend_id = self.parse_friend(user_token, friend_full_name)
+
+        query = '%s/likes' % friend_id
         print('Like query: ' + query)
         likes = self.user_graph_query_map[user_token]['graph'].get_object(id=query, fields='about,overall_star_rating,fan_count,rating_count,link,name,picture{url}')
+        print('All likes: ' + str(likes))
         return likes
+
+    def get_events(self, user_token):
+        if user_token not in self.user_graph_query_map:
+            self.add_user(user_token)
+        event_ids = [
+            '1837139043276401',
+            '214948752319763',
+            '1252150611568955',
+            '1325364077532723',
+            '1548708398495787'
+        ]
+        events = []
+        for event_id in event_ids:
+            events.append(self.user_graph_query_map[user_token]['graph'].get_object(id=event_id))
+        # print(events)
+        return events
 
 # David temp id: 749012631926082
 

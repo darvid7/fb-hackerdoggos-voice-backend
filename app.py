@@ -98,14 +98,15 @@ def create_query():
     # FB GRAPH QUERY IN HERE.
     print('FB Graph Query')
     intent_type = intent_res['type']
-    person = intent_res['person']
+    if 'person' in intent_res:
+        person = intent_res['person']
+        if person == 'unknown':
+            error = 'Person is unknown'
+            return jsonify({'error': error}), 404
+
     print('______')
     print(intent_res)
     # TODO: Return names.
-    if person == 'unknown':
-        error = 'Person is unknown'
-        return jsonify({'error': error}), 404
-
     print(intent_type)
     if intent_type == 'get_recent_posts':
         feed = fb_graph.get_feed(user_token, person)
@@ -125,10 +126,17 @@ def create_query():
         return jsonify({'todo': 'this', 'intent': intent_res}), 201
 
     elif intent_type == 'get_nearby_events':
-        return jsonify({'todo': 'this', 'intent': intent_res}), 201
+        events = fb_graph.get_events(user_token)
+        if not events:
+            return jsonify({'error': 'Events not found'}), 404
+        return jsonify({'events': events, 'intent': intent_res}), 201
 
     elif intent_type == 'post_love_emojis':
         return jsonify({'todo': 'this', 'intent': intent_res}), 201
+        
+    elif intent_type == 'get_likes':
+        likes = fb_graph.get_likes(user_token, person)
+        return jsonify({'likes': likes, 'intent': intent_res}), 201
 
     # print(intent_res)
 
