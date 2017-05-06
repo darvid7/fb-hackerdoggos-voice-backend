@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, abort, request
 from config_parser import ConfigParser
 from flask_cors import CORS
+import os
 import json
 # import helper
 import random
@@ -119,7 +120,6 @@ def create_query():
     elif intent_type == 'troll_user':
         trolled = random.randint(0, len(juicy)-1)
         return jsonify({juicy[trolled][1]: juicy[trolled][0]}), 201
-        
 
     # print(intent_res)
 
@@ -129,10 +129,7 @@ def create_query():
     # return response, 201
 
 if __name__ == '__main__':
-    app.run(
-        debug=True,
-        host="0.0.0.0",
-        port=int("1337")
-    )
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
 
 # http://0.0.0.0:1337/hackerdoggos/api/v1/query
