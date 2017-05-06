@@ -1,10 +1,15 @@
 from flask import Flask, jsonify, abort, request
 from config_parser import ConfigParser
 from flask_cors import CORS
-import helper
+# import helper
+from helper.wit_fetcher import WitFetcher
+from helper.facebook_graph_helper import FacebookGraphHelper
 
+fb_graph = FacebookGraphHelper()
 app = Flask(__name__)
 CORS(app)
+
+
 
 fb_config = {}
 wit_config = {}
@@ -17,16 +22,8 @@ def config_set_up():
 
 queries = [
     {
-        'text': 'Hi how is x',
+        'text': 'Something',
         'id': 1
-    },
-    {
-        'text': 'Potato',
-        'id': 2
-    },
-    {
-        'text': 'Facebook',
-        'id': 3
     }
 ]
 
@@ -57,7 +54,7 @@ def get_specific_query(query_id):
 def create_query():
     if not request.json or not 'text' in request.json or request.json['text']=='':
         abort(400)
-    wt = helper.WitFetcher()
+    wt = WitFetcher()
     text = request.json['text']
     print("Given text is : " + str(text))
     query = {
@@ -66,6 +63,28 @@ def create_query():
     }
     intent_res = wt.getResponse(text)
     queries.append(query)
+    # ------------------------------
+    # FB GRAPH QUERY IN HERE.
+    print('FB Graph Query')
+    intent_type = intent_res['type']
+    print(intent_type)
+    if intent_type == 'get_recent_posts':
+
+    elif intent_type == 'get_birthday':
+
+
+    elif intent_type == 'get_friend_online_status':
+        return jsonify({'todo': 'this'}), 201
+
+    elif intent_type == 'get_nearby_events':
+        return jsonify({'todo': 'this'}), 201
+
+    elif intent_type == 'post_love_emojis':
+        return jsonify({'todo': 'this'}), 201
+
+    print(intent_res)
+
+    # ------------------------------
     response = jsonify({'query': query, 'intent': intent_res})
     # response.headers.add('Access-Control-Allow-Origin', '*')
     return response, 201
@@ -76,3 +95,5 @@ if __name__ == '__main__':
         host="0.0.0.0",
         port=int("1337")
     )
+
+# http://0.0.0.0:1337/hackerdoggos/api/v1/query
