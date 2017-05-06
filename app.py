@@ -63,14 +63,20 @@ def create_query():
     # FB GRAPH QUERY IN HERE.
     print('FB Graph Query')
     intent_type = intent_res['type']
+    person = intent_res['person']
+
+    # TODO: Return names.
+    if person == 'unknown':
+        return jsonify({'query': 'unknown'}), 201
+
     print(intent_type)
     if intent_type == 'get_recent_posts':
-        feed = fb_graph.get_feed()
-        return jsonify({'feed': feed, 'intent': intent_res}), 201
+        feed = fb_graph.get_feed(user_token, person)
+        return jsonify({'feed': feed, 'intent': intent_res, 'person': person}), 201
 
     elif intent_type == 'get_birthday':
-        birthday = fb_graph.get_birthday()
-        return jsonify({'birthday': birthday, 'intent': intent_res}), 201
+        birthday = fb_graph.get_birthday(user_token, person)
+        return jsonify({'birthday': birthday, 'intent': intent_res, 'person': person}), 201
 
     elif intent_type == 'get_friend_online_status':
         return jsonify({'todo': 'this', 'intent': intent_res}), 201
