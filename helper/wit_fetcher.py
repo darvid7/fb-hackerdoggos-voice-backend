@@ -58,6 +58,20 @@ class WitFetcher:
             out['person'] = 'unknown'
         return out
 
+    def parseGetLikesResponse(self, res):
+        out = {}
+        out['type'] = 'get_likes'
+        out['person'] = self.getPerson(res)
+        return out
+
+    def getPerson(self, res):
+        person = None
+        try:
+            person = res['person'][0]['value']
+        except KeyError:
+            person = 'unknown'
+        return person
+
     def getResponse(self, query):
         res = self.wit_client.message(query)['entities']
         keys = []
@@ -75,6 +89,8 @@ class WitFetcher:
             return self.parseCheckEventsResponse(res)
         elif intent == 'IntentSendLoves':
             return self.parseSendLovesResponse(res)
+        elif intent == 'IntentGetLikes':
+            return self.parseGetLikesResponse(res)
         else:
             return 'no matches'
 
