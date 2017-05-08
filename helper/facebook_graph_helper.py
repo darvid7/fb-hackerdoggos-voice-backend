@@ -191,13 +191,6 @@ if __name__ == '__main__':
     fb = FacebookGraphHelper('../fb_app_config')
     # l = fb.graph.get_object(id='218613405205017')
     # print(l)
-    fb.add_user('EAADxJ5QX8c0BAIZCHiKzTsDj1BAebA4mZANH7QYZAZBnVKOsnJZCotEn7VSsjfCFSbvWKF8cRiUdARTofeqLeQoRZAMpy0JAxbaO7cUrmrHHvVfv7ArYdD14vXHOYOknN9TMeNYZCBnDLvOGTCIuV3ZBGUtZBkTNeB1wZD')
-    fb.get_all_registered_friends('EAADxJ5QX8c0BAIZCHiKzTsDj1BAebA4mZANH7QYZAZBnVKOsnJZCotEn7VSsjfCFSbvWKF8cRiUdARTofeqLeQoRZAMpy0JAxbaO7cUrmrHHvVfv7ArYdD14vXHOYOknN9TMeNYZCBnDLvOGTCIuV3ZBGUtZBkTNeB1wZD')
-    fb.get_birthday('EAADxJ5QX8c0BAIZCHiKzTsDj1BAebA4mZANH7QYZAZBnVKOsnJZCotEn7VSsjfCFSbvWKF8cRiUdARTofeqLeQoRZAMpy0JAxbaO7cUrmrHHvVfv7ArYdD14vXHOYOknN9TMeNYZCBnDLvOGTCIuV3ZBGUtZBkTNeB1wZD',
-                    'David Lei')
-    fb.get_likes('EAADxJ5QX8c0BAJj0xKG9vP1u0VFXpWeHzaqXuLTZCE9YbKJtPZBvKcbvUfQth9UraL7hrTJpKvT0MPl6WfJ0pVAM7ovkbkWZCtYxDxeITBsnsL8sE5fXyCdduVgusksJbTtyfaBEXCEZADGkA7uvo5kDQZCHE5dci9j5Qli54HtbDE2AO37fCaF0y2x362YUZD',
-                 'Joanna')
-
 
     # fb.get_birthday('Joanna', 'Lee')
 
@@ -211,5 +204,4 @@ if __name__ == '__main__':
     # for f in friends:
     #     print(f)
     # print('here--')
-    # x = fb.authenticated_user_graph.get_object(id='10153036881648177/feed')
     # print(x)
